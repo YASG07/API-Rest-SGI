@@ -1,10 +1,22 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const Productsroutes = require ("./routes/productRoutes");
+const Productsroutes = require("./routes/productRoutes");
+const tokenUtilities = require("./middleware/utilitiesMiddleware");
 
 const app = express();
 app.use (bodyParser.json());
 
+app.post("/login", (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+
+    if(username === 'admin' && password === 'admin'){
+        const token = tokenUtilities.generateToken({id: 1, username: username});
+        res.json(token);
+    } else {
+        res.status(401).json({error: "Unauthorized"});
+    }
+})
 
 app.use("/product",Productsroutes);
 
