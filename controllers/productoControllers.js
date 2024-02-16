@@ -2,8 +2,8 @@ const Product = require("../models/producto");
 
 let Products = [
     (new Product(1, "Cepillo", "Cepillo para el cabello", 10, 120.00)),
-    (new Product(2, "Cepilante", "No se",15,30.00)),
-    (new Product(3, "Cereal", "Cereal rico",20,30.00)),
+    (new Product(2, "Cepilante", "No se",15,10.00)),
+    (new Product(3, "Cereal", "Cereal rico",20,38.00)),
     (new Product(4, "Gel", "Gel fijador para el cabello",25,30.00))
 ]
 
@@ -12,14 +12,31 @@ function getAllProducts (){
 }
 
 function getSpecificProduct(id){
-    console.log('Pero porque sho')
-    return Products[id-1];
+    len = Products.length;
+    for(i = 0; i < len; i++){
+        if(Products.at(i).id == id){
+            return Products.at(i);
+        }//if
+    }//for
+    return "No existe";
 }
 
+//ordena de mayor a menor
 function orderDescByPrice(){
-    let ProductsAsc = [];
-    
-    return ProductsAsc;
+    let len = Products.length;
+    let swapped;
+    do {
+        swapped = false;
+        for (let i = 0; i < len - 1; i++) {
+            if (Products[i].price < Products[i + 1].price) {
+                let temp = Products[i];
+                Products[i] = Products[i + 1];
+                Products[i + 1] = temp;
+                swapped = true;
+            }//if
+        }//for
+    } while (swapped);
+    return Products;
 }
 
 function createProduct(name,description,stock,price) {
@@ -29,15 +46,26 @@ function createProduct(name,description,stock,price) {
 }
 
 function updateProduct(id, name, description, stock, price){
-    Products.at(id-1).name = name;
-    Products.at(id-1).description = description;
-    Products.at(id-1).stock = stock;
-    Products.at(id-1).price = price;
-    return Products.at(id-1);
+    len = Products.length;
+    i = 0;
+    for(; i < len; i++){
+        if(Products.at(i).id == id){
+            Products.at(i).name = name;
+            Products.at(i).description = description;
+            Products.at(i).stock = stock;
+            Products.at(i).price = price;
+        }//if
+    }//for
+    return Products.at(i);
 }
 
 function killProduct(id) {
-    Products.splice(id-1, 1);
+    len = Products.length;
+    for(i = 0; i < len; i++){
+        if(Products.at(i).id == id){
+            Products.splice(i, 1);
+        }//if
+    }//for
     return Products;
 }
 
@@ -54,6 +82,7 @@ function getInventoryValue(){
     return Value;
 }
 
+//Devuelve todos los articulos cuyo stock es menor al parametro recibido
 function getLessStock(stock){
     let productsLessStock = [];
     Products.forEach(function(P) {
