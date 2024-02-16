@@ -6,6 +6,14 @@ router.get('/',(req,res)=>{
     res.json(Product.getAllProducts())
 });
 
+router.get('/order', (req, res) => {
+    res.json(Product.orderDescByPrice());
+})
+
+router.get('/value', (req, res) => {
+    res.json({ message: `Inventory is valued at $${Product.getInventoryValue()} MXN`});
+})
+
 router.get('/:id', (req,res) => {
     const {id} = req.params;
     res.json(Product.getSpecificProduct(id));
@@ -35,8 +43,9 @@ router.get('/search/:name', (req, res) => {
     res.json(products);
 })
 
-router.get('/order', (req, res) => {
-    res.json(Product.orderAscByPrice());
+router.get('/lessthan/:stock', (req, res) => {
+    const {stock} = req.params;
+    res.json(Product.getLessStock(stock));
 })
 
 module.exports = router;

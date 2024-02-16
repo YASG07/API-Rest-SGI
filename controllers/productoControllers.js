@@ -2,9 +2,9 @@ const Product = require("../models/producto");
 
 let Products = [
     (new Product(1, "Cepillo", "Cepillo para el cabello", 10, 120.00)),
-    (new Product(2, "Cepilante", "No se",20,30.00)),
-    (new Product(2, "Cereal", "Cereal rico",20,30.00)),
-    (new Product(2, "Gel", "Gel fijador para el cabello",20,30.00))
+    (new Product(2, "Cepilante", "No se",15,30.00)),
+    (new Product(3, "Cereal", "Cereal rico",20,30.00)),
+    (new Product(4, "Gel", "Gel fijador para el cabello",25,30.00))
 ]
 
 function getAllProducts (){
@@ -12,24 +12,20 @@ function getAllProducts (){
 }
 
 function getSpecificProduct(id){
+    console.log('Pero porque sho')
     return Products[id-1];
 }
 
-function orderAscByPrice(){
+function orderDescByPrice(){
     let ProductsAsc = [];
-    Products.forEach(function (P) {
-        var mayor = P.price;
-        if(mayor >= P.price){
-            ProductsAsc.push(P);
-        }
-    })
+    
     return ProductsAsc;
 }
 
 function createProduct(name,description,stock,price) {
     const newProduct = new Product (Products.length+1, name, description, stock, price);
     Products.push(newProduct)
-    return newProduct
+    return newProduct;
 }
 
 function updateProduct(id, name, description, stock, price){
@@ -50,6 +46,24 @@ function searchProductsByName(name) {
     return matchingProducts;
 }
 
+function getInventoryValue(){
+    var Value = 0;
+    Products.forEach(function (P) {
+        Value += P.price * P.stock;
+    })
+    return Value;
+}
+
+function getLessStock(stock){
+    let productsLessStock = [];
+    Products.forEach(function(P) {
+        if(P.stock < stock){
+            productsLessStock.push(P);
+        }
+    })
+    return productsLessStock;
+}
+
 module.exports={
     getAllProducts,
     createProduct,
@@ -57,5 +71,7 @@ module.exports={
     updateProduct,
     killProduct,
     searchProductsByName,
-    orderAscByPrice
+    orderDescByPrice,
+    getInventoryValue,
+    getLessStock
 }
