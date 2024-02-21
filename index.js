@@ -18,6 +18,10 @@ app.post("/login", (req, res) => {
     }
 })
 
+app.get("/", (req, res) => {
+    res.json({ Message: `listening on port ${PORT}`});
+})
+
 app.use("/product",Productsroutes);
 
 const PORT = process.env.PORT || 3000;
