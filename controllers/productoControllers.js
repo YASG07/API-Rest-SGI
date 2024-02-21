@@ -7,6 +7,8 @@ let Products = [
     (new Product(4, "Gel", "Gel fijador para el cabello",25,30.00))
 ]
 
+let IDcount = Products.at(Products.length-1).id;
+
 function getAllProducts (){
     return Products
 }
@@ -40,7 +42,8 @@ function orderDescByPrice(){
 }
 
 function createProduct(name,description,stock,price) {
-    const newProduct = new Product (Products.length+1, name, description, stock, price);
+    IDcount++;
+    const newProduct = new Product (IDcount, name, description, stock, price);
     Products.push(newProduct)
     return newProduct;
 }

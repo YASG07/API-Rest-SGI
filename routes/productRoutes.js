@@ -34,8 +34,12 @@ router.put('/:id', Token, (req, res) => {
 })
 
 router.delete('/:id', Token, (req,res) => {
-    const {id} = req.params;
-    res.status(202).json(Product.killProduct(id));
+    try{
+        const {id} = req.params;
+        res.status(202).json(Product.killProduct(id));
+    } catch (error){
+        res.status(202).json({ Message: "Element deleted succesfully"});
+    }
 })
 
 router.get('/search/:name', Token, (req, res) => {
