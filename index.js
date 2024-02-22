@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const Productsroutes = require("./routes/productRoutes");
+const Usersroutes = require("./routes/userRoutes");
 const tokenUtilities = require("./middleware/utilitiesMiddleware");
 
 const app = express();
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
     res.json({ Message: `listening on port ${PORT}`});
 })
 
+app.use("/user", Usersroutes);
 app.use("/product",Productsroutes);
 
 const PORT = process.env.PORT || 3000;
